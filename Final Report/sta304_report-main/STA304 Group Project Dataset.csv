@@ -1,0 +1,44 @@
+,studentID,academic_workload,hours_study,stress,anxiety,concentration,hours_sleep,living_situation,time_management,missed_social_events,financial_problems
+1,ggplotMyBeloved369,3,8,Sometimes,Sometimes,Sometimes,8,Living alone,2,2,2
+2,ComputationalStatistics364,5,10,Sometimes,Never,Always,7,Living with family,2,3,1
+3,NonemptyDataset4387,4,20,Always,Always,Always,20,Living with roommates,2,2,1
+4,ExpensiveToronto12,4,14,Always,Sometimes,Sometimes,7,Living with roommates,1,1,0
+5,HamiltonHousing579,4,8,Always,Sometimes,Always,7,Living with roommates,2,4,1
+6,ClubPenguinA,5,3,Sometimes,Never,Sometimes,7,Living with family,1,4,0
+7,amazing2data,3,6,Sometimes,Sometimes,Sometimes,7,Living with family,2,1,1
+8,ExpensiveToronto,3,8,Always,Always,Always,6,Living with family,3,2,2
+9,Badminton,5,30,Always,Always,Always,7,Living with roommates,1,3,2
+10,setseed123,5,25,Always,Sometimes,Always,6,Living alone,3,4,3
+11,tennis,4,30,Always,Always,Always,7,Living with family,0,2,1
+12,NeedPiazza555,5,100,Always,Always,Always,6,Living with family,4,4,4
+13,mtcarsMyBelovedqq,4,40,Always,Always,Sometimes,7,Living with roommates,1,2,0
+14,ComputationalStatistics426,5,7,Always,Always,Sometimes,7,Living with roommates,3,2,1
+15,soccer,4,3,Always,Always,Sometimes,7,Living on campus,3,3,4
+16,MathIsBetter456,4,45,Sometimes,Always,Sometimes,8,Living with roommates,2,0,2
+17,AdditiveModel997,4,10,Sometimes,Sometimes,Sometimes,8,Living with roommates,1,3,2
+18,HappyTent723,4,10,Always,Always,Sometimes,8,Living alone,2,2,2
+19,Doodle239,5,3,Always,Always,Always,7,Living with family,3,1,1
+20,ComputationalStatistics943,5,35,Always,Always,Always,10,Living with roommates,4,1,1
+21,AdditiveModel996,3,5,Sometimes,Sometimes,Always,4,Living with family,2,2,1
+22,ClubPenguinP1,4,30,Always,Sometimes,Sometimes,6,Living with family,2,3,0
+23,HonkaiStarRail,3,21,Sometimes,Sometimes,Sometimes,7,Living with roommates,2,2,1
+24,variance,4,15,Sometimes,Sometimes,Never,7,Living with family,1,2,0
+25,WowWowWow986,3,15,Sometimes,Sometimes,Sometimes,9,Living with roommates,2,1,0
+26,Genshinlmpact,5,15,Always,Always,Sometimes,7,Living alone,1,1,0
+27,GPADestroyeryyy,4,6,Always,Always,Sometimes,7,Living with roommates,1,4,0
+28,basketball,4,25,Always,Always,Always,7.5,Living on campus,3,0,0
+29,Veggie656,4,12,Never,Sometimes,Sometimes,8,Living alone,0,0,2
+30,Biostatistics584,5,35,Always,Always,Always,6,Living with roommates,4,2,1
+31,project024,3,13,Always,Always,Always,6,Living with roommates,2,3,4
+32,Teletubbies345,4,40,Always,Sometimes,Sometimes,7,Living with roommates,3,3,2
+33,Moolah,4,10,Sometimes,Sometimes,Never,7.5,Living with roommates,1,3,2
+34,Monneh,5,35,Always,Always,Sometimes,6,Living on campus,2,2,2
+35,football,3,15,Sometimes,Sometimes,Sometimes,6,Living with family,3,3,1
+36,project789,5,20,Sometimes,Sometimes,Sometimes,5,Living alone,3,4,4
+37,Bachelor242,4,20,Always,Always,Never,6,Living with roommates,2,4,1
+38,rayrayray1,4,24,Always,Sometimes,Sometimes,8,Living with family,3,2,3
+39,credit,5,10,Always,Sometimes,Sometimes,8,Living with roommates,2,3,2
+40,license,4,10,Sometimes,Always,Sometimes,7,Living with roommates,1,1,2
+41,WorldofGumball,4,20,Always,Always,Always,7,Living with roommates,2,2,2
+42,BachelorPlus576,1,10,Never,Never,Sometimes,9,Living with roommates,1,0,2
+43,GPADestroyeruuu,3,9,Sometimes,Never,Sometimes,8,Living alone,0,3,0

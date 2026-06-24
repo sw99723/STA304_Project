@@ -1,0 +1,385 @@
+
+Generate Sample
+```{r}
+my_data = read.csv('STA304 Group Project Dataset.csv', header = TRUE, sep=',')
+# my_data
+
+# Remove the column 'X'
+data_cleaned <- my_data[, !(names(my_data) == "X")]
+# Remove fake responses: rows 3 and 12
+data_cleaned <- data_cleaned[-c(3, 12),]
+# data_cleaned
+
+# Calculating sample size
+N = 200
+B = .29
+D = (B^2)/4
+# sigma = sd(data_cleaned$academic_workload)
+sigma = (max(data_cleaned$academic_workload) - min(data_cleaned$academic_workload))/4
+# n = ceiling((N*sigma^2) / ((N-1)*D + sigma^2))
+n = ceiling((N*sigma**2) / ((N-1)*D + sigma**2))
+# sigma2
+n
+
+# Select a random sample of n rows
+set.seed(1)
+random_indices <- sample(1:nrow(data_cleaned), n)
+sample_data <- data_cleaned[random_indices, ]
+# sample_data
+attach(sample_data)
+```
+
+# 4. Analysis
+
+Section 1. Chi-square Test for Independence
+
+Section 2. Simple and Multiple Linear Regressions
+
+This part of the analysis is concerned with the application of linear regression to answer the three research questions as outlined above in the introduction.
+
+## Research Question 1
+
+### a. Relevant graphs & tables
+Research Question 1 is concerned with determining whether there is a relationship between students’ academic workload and the prevalence of mental health issues in students. To answer this question, we start by plotting a boxplot of academic workload by stress level. This plot suggests that higher stress levels are associated with a higher academic workload. On average, students who "Always" or "Sometimes" feel stressed tend to have a higher workload than those who "Never" feel stressed. 
+
+```{r}
+library(ggplot2)
+
+sample_data$stress <- factor(sample_data$stress, levels = c("Never", "Sometimes", "Always"))
+boxplot_plot <- ggplot(sample_data, aes(x = factor(stress), y = academic_workload)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +
+  labs(title = "Boxplot of Academic Workload by Stress Level",
+       x = "Stress Level",
+       y = "Academic Workload") +
+  theme_minimal()
+print(boxplot_plot)
+```
+
+
+### c. Necessary Assumptions
+To confirm this association, we implement a simple linear regression model, where the dependent variable is stress_numeric (the stress variable, converted to numeric values), and the independent variable is academic_workload. To implement this model, we check the following assumptions using the following plot of the residuals:
+
+![Residuals Plot](residuals_rq1.png){width=80%}
+
+ 1. Independence of errors: Since the plot has no noticable pattern, the independence assumption is satisfied.
+ 2. Normality of errors: Since our sample size is sufficiently large, by the Central Limit Theorem the sample mean (and by extension, the sampling distribution of residuals) approximately follows a Normal distribution. 
+ 3. Homogeneity of variances amongst errors: Since the residuals plot has a "horizontal band appearance", this suggests that the error have mean zero and a constant variance.
+
+ Since all the assumptions are met, we run the regression and obtain the output below using the code in Appendix B:
+
+### d. Computation and statistical test output
+Call:
+lm(formula = stress_numeric ~ academic_workload, data = sample_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5301 -0.3668  0.1434  0.4699  0.7965
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)        1.22389    0.40942   2.989  0.00495 **
+academic_workload  0.32655    0.09945   3.284  0.00224 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5353 on 37 degrees of freedom
+Multiple R-squared:  0.2256,    Adjusted R-squared:  0.2047
+F-statistic: 10.78 on 1 and 37 DF,  p-value: 0.002245
+
+The equation of the regression line is given by: $stress = 1.22389 + 0.32655*workload$
+
+### e. Interpretation
+The small $p-value = 0.00224$ indicates that academic workload is a significant predictor of stress. Therefore, we can conclude that there is a significant relationship between students academic workload and their stress levels.
+
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+
+## Research Question 2
+
+### a. Relevant graphs & tables
+Research Question 2 investigates whether there is a relationship between students’ academic workload, the amount of sleep they get, and impact on mental health. Since the ANOVA below showed no significant relationship between stress and hours of sleep, we investigate the effect of another factor, the number of missed social events.To begin, we plot a boxplot of hours of sleep by the number of missed social events. This plot suggests students who miss more social events tend to have fewer hours of sleep on average.
+
+```{r}
+boxplot_plot <- ggplot(sample_data, aes(x = factor(missed_social_events), y = hours_sleep)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +  # Customize the colors if desired
+  labs(title = "Boxplot of Hours of Sleep by Missed Social Events",
+       x = "Missed Social Events",
+       y = "Hours of Sleep") +
+  theme_minimal()
+
+# Display the plot
+print(boxplot_plot)
+```
+
+### c. Necessary Assumptions
+To assess this relationship, we use a multiple linear regression model with hours of sleep as the dependent variable, and academic workload and missed social events as the independent variables. Before interpreting this model, we check the following assumptions:
+
+![Residuals Plot](residuals_rq2.png){width=80%}
+![QQ Plot](qq_rq2.png){width=80%}
+
+1. Independence of errors: The residual plot shown above indicates no clear patterns, which suggests independence.
+2. Normality of errors: Since the sample size is large, the Central Limit Theorem implies that the residuals should approximate a normal distribution. Also, a QQ-plot confirms Normality.
+3. Homogeneity of variances: The residuals plot exhibits a roughly horizontal band, indicating constant variance across predicted values.
+4. No multi-collinearity: We calculated the VIF of each independent variable, and found that $VIF(academic\_workload) = 1.076844$, and $VIF(missed\_social\_events) = 1.076844$. Since they are both less than 5,this indicates there is little correlation between them.
+
+With all assumptions adequately met, we proceed with the regression analysis. The code used to generate the model can be found in Appendix B.
+
+### d. Computation and statistical test output
+Call:
+lm(formula = hours_sleep ~ academic_workload + missed_social_events, 
+    data = sample_data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max
+-1.37588 -0.54906 -0.09342  0.60662  2.53031 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+(Intercept)            8.5521     0.6661  12.838  5.3e-15 ***
+academic_workload     -0.1412     0.1666  -0.848  0.40208
+missed_social_events  -0.3763     0.1194  -3.151  0.00327 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.864 on 36 degrees of freedom
+Multiple R-squared:  0.2653,    Adjusted R-squared:  0.2245 
+F-statistic:   6.5 on 2 and 36 DF,  p-value: 0.003889
+
+The regression equation is given by:
+
+$hours\_of\_sleep = 8.5521 − 0.1412 * academic\_workload − 0.3763 * missed\_social\_events$
+
+### e. Interpretation
+
+The output of the regression analysis shows that the missed social events has a statistically significant negative association with hours of sleep (p = 0.00327). However, academic workload does not have a significant relationship with hours of sleep (p = 0.40208).
+
+## Research Question 3
+
+### a. Relevant graphs & tables
+Research Question 3 examines whether mental health, represented by stress levels, is affected by students’ living situations and their ability to maintain a work-life balance. To explore this relationship, we first plot a boxplot of stress level by missed social events, with students grouped by stress categories ("Always," "Never," and "Sometimes"). This plot suggests that students who miss social events "Always" or "Sometimes" have higher stress levels, while those who "Never" miss social events report lower stress levels.
+
+```{r}
+boxplot_plot <- ggplot(sample_data, aes(x = factor(stress), y = missed_social_events)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +
+  labs(title = "Boxplot of Missed Social Events by Stress Level",
+       x = "Missed Social Events",
+       y = "Stress Level") +
+  theme_minimal()
+print(boxplot_plot)
+```
+
+
+### c. Necessary Assumptions
+To investigate the impact of missed social events and living situations on stress, we use a multiple linear regression model. The response variable is stress (in numeric form), and the predictors are missed social events and living situation. We verify the following assumptions:
+
+![Residuals Plot](residuals_rq3.png){width=80%}
+![QQ Plot](qq_rq3.png){width=80%}
+
+1. Independence of errors: The residual plot indicates no clear patterns, suggesting that the errors are  independent.
+2. Normality of errors: Since the sample size is large, the Central Limit Theorem implies that the residuals should approximate a normal distribution. Also, a QQ-plot confirms Normality.
+3. Homogeneity of variances: The residuals plot exhibits a roughly horizontal band, indicating constant variance across predicted values.
+4. No multi-collinearity: Since both VIF values are close to 1, there’s no indication of multicollinearity in this model.
+
+With all assumptions adequately met, we proceed with the regression analysis. The code used to generate the model can be found in Appendix B.
+
+
+### d. Computation and statistical test output
+Call:
+lm(formula = stress_numeric ~ missed_social_events + living_situation, 
+    data = sample_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max
+-1.2350 -0.4251  0.1426  0.4538  0.9143
+
+Coefficients:
+                                      Estimate Std. Error t value Pr(>|t|)    
+(Intercept)                            1.93006    0.27980   6.898 6.02e-08 ***
+missed_social_events                   0.15560    0.07721   2.015   0.0518 .  
+living_situationLiving on campus       0.81061    0.39928   2.030   0.0502 .
+living_situationLiving with family     0.21206    0.28310   0.749   0.4590    
+living_situationLiving with roommates  0.30493    0.25406   1.200   0.2383
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5745 on 34 degrees of freedom
+Multiple R-squared:  0.1806,    Adjusted R-squared:  0.08416
+F-statistic: 1.873 on 4 and 34 DF,  p-value: 0.1378
+
+The equation of the regression line is given by:
+
+$stress = 1.93006 + 0.15560 * missed\_social\_events + 0.81061*living\_situation\_living\_on\_campus + 0.21206*living\_with\_family + 0.30493*living\_with\_roommates$
+
+### e. Interpretation
+The results indicate that missed social events are a marginally significant predictor of stress levels (p = 0.0518). Living situation, specifically living on campus, is also a marginally significant predictor (p = 0.0502). However, living with family (p = 0.4590) and living with roommates (p = 0.2383) do not significantly predict stress. 
+
+
+Section 3. ANOVA
+
+
+
+
+
+
+# Appendix B
+
+```{r}
+# Research Question 1 - Simple Linear Regression
+sample_data$stress_numeric <- as.numeric(factor(sample_data$stress, levels = c("Never", "Sometimes", "Always")))
+rq1_stress.lm = lm(stress_numeric ~ academic_workload, data = sample_data)
+summary(rq1_stress.lm)
+```
+
+```{r}
+# Assumptions for Research Question 1 - Simple Linear Regression
+png("residuals_rq1.png", width = 800, height = 600)
+# Plot code goes here, for example:
+plot(residuals(rq1_stress.lm))
+dev.off()
+```
+
+```{r}
+# Research Question 2 - Multiple Linear Regression
+rq2.lm = lm(hours_sleep ~ academic_workload + missed_social_events, data = sample_data)
+summary(rq2.lm)
+```
+
+```{r}
+# Assumptions for Research Question 2 - Multiple Linear Regression
+png("residuals_rq2.png", width = 800, height = 600)
+# Plot code goes here, for example:
+plot(residuals(rq2.lm))
+dev.off()
+```
+
+```{r}
+# Assumptions for Research Question 2 - Multiple Linear Regression
+png("qq_rq2.png", width = 800, height = 600)
+# Plot code goes here, for example:
+plot(rq2.lm, which=2)
+dev.off()
+```
+
+```{r}
+# Assumptions for Research Question 2 - Multiple Linear Regression
+library(car)
+vif(rq2.lm)
+```
+
+
+```{r}
+# Research Question 3 - Multiple Linear Regression
+rq3.lm <- lm(stress_numeric ~ missed_social_events + living_situation, data = sample_data)
+summary(rq3.lm)
+```
+
+```{r}
+# Assumptions for Research Question 3 - Multiple Linear Regression
+png("residuals_rq3.png", width = 800, height = 600)
+# Plot code goes here, for example:
+plot(residuals(rq3.lm))
+dev.off()
+```
+
+```{r}
+# Assumptions for Research Question 2 - Multiple Linear Regression
+png("qq_rq3.png", width = 800, height = 600)
+# Plot code goes here, for example:
+plot(rq3.lm, which=2)
+dev.off()
+```
+
+```{r}
+# Assumptions for Research Question 3 - Multiple Linear Regression
+library(car)
+vif(rq3.lm)
+```
+
+# 6. Limitations
+
+Although this study has provided several valuable insights into the relationship between students' workload, stress, sleep, and work-life balance, there are a few limitations that may have affected the accuracy of the findings. Some of these limitations include possible issues with ensuring sample randomization, survey question design, and sample size. The first limitation is the potential issue with ensuring randomization in the sample selection. Although we aimed to select a random sample of students from the survey responses, the process may have been influenced by biases in how respondents answered the survey. For example, certain groups of students may have been more likely to complete the survey, potentially leading to an unrepresentative sample. Additionally, some of the survey questions could have been clearer or more specific, which might have helped reduce the possibility of misinterpretation. Lastly, expanding the sample size would improve the accuracy and applicability of the findings. In the future, the study could be improved by ensuring a completely randomised design and revisiting our survey questions to capture more accurate responses.
+
+# 7. Conclusion 
+
+
+The linear regression analysis conducted for the three research questions of this study provides valuable insights into the factors affecting student stress and mental health. For Research Question 1, we found a significant positive relationship between academic workload and stress levels, suggesting that students with heavier workloads tend to experience higher levels of stress. In Research Question 2, while academic workload did not significantly impact the amount of sleep, missed social events were found to significantly reduce hours of sleep, which may contribute to poor mental health. For Research Question 3, missed social events and living situation were marginally significant predictors of stress, indicating that students who miss social events or live on campus tend to report higher stress levels. These findings highlight the importance of considering multiple factors in understanding a student's overall well-being. However, the limitations of this analysis, including potential issues with sample randomization and measurement quality, should be addressed in future research to enhance the robustness and accuracy of the results. Future studies should also explore other possible variables, such as social support and coping mechanisms, which may further explain the mental health challenges faced by students.
+
+
+# # # # # # # # # # # # #
+
+
+SIMPLE TEST 1: CHI-SQUARE TEST FOR INDEPENDENCE
+```{r}
+# X-squared = 4.2481, df = 1, p-value = 0.03929
+# After grouping categories
+# Group categories for anxiety and concentration
+sample_data$anxiety_grouped <- ifelse(anxiety == "Always", "Always", "Other")
+sample_data$concentration_grouped <- ifelse(concentration == "Always", "Always", "Other")
+
+# Create a contingency table
+contingency_table <- table(sample_data$anxiety_grouped, sample_data$concentration_grouped)
+
+# Print the contingency table
+cat("Contingency Table:\n")
+print(contingency_table)
+
+# Check expected Frequencies
+chi_sq_test <- chisq.test(contingency_table)
+chi_sq_test$expected
+
+# Perform the Chi-squared test
+chi_squared_test <- chisq.test(contingency_table)
+
+# Print the results
+cat("\nChi-squared Test Results:\n")
+print(chi_squared_test)
+```
+
+
+
+
+
+<!-- 
+Old stuff
+```{r}
+ -->
+
+# Recode stress as binary (0 = Not Stressed, 1 = Stressed)
+# sample_data$stress_binary <- ifelse(sample_data$stress == "Never", 0, 1)
+# sample_data$anxiety_binary <- ifelse(sample_data$anxiety == "Never", 0, 1)
+# sample_data$concentration_binary <- ifelse(sample_data$concentration == "Never", 0, 1)
+
+# sleep1_3.lm = lm(hours_sleep ~ stress_binary + missed_social_events, data = sample_data)
+# summary(sleep1_3.lm) # 0.402, 0.008, F: 0.003886
+
+# sleep1_1.lm = lm(hours_sleep ~ time_management + stress_binary + missed_social_events, data = sample_data)
+# summary(sleep1_1.lm) # 0.42770, 0.60898, 0.00703, F: 0.008939
+
+# time1.lm = lm(time_management ~ stress - studentID, data = sample_data)
+# summary(time1.lm) # 0.0160, 0.0616, F: 0.02051
+
+# mental_health.lm <- lm(stress_binary ~ academic_workload, data = sample_data) # 0.00201, 0.00925, F: 0.009247
+# summary(mental_health.lm)
+
+# library(nnet)
+# # Multinomial logistic regression (Classification)
+# stress_model_multi <- multinom(stress ~ hours_sleep + academic_workload, data = sample_data)
+# summary(stress_model_multi)
+# # Calculate z-scores and p-values for each coefficient
+# z_scores <- summary(stress_model_multi)$coefficients / summary(stress_model_multi)$standard.errors
+# p_values <- 2 * (1 - pnorm(abs(z_scores)))  # Two-tailed p-values
+# z_scores
+# p_values
+
+# p_values <- p_values * 0.01
+
+# # Create a boxplot of hours_sleep by stress_binary
+# boxplot_plot <- ggplot(sample_data, aes(x = factor(stress_binary), y = hours_sleep)) +
+#   geom_boxplot(fill = "#56B4E9", color = "black") +  # Customize the colors if desired
+#   labs(title = "Boxplot of Hours of Sleep by Stress Level",
+#        x = "Stress (0 = No Stress, 1 = Stress)",
+#        y = "Hours of Sleep") +
+#   theme_minimal()
+
+# # Display the plot
+# print(boxplot_plot)
+```
