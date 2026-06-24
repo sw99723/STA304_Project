@@ -1,0 +1,438 @@
+
+---
+title: "STA304 Report"
+author: "Chau Nguyen, John Luc, Adam Tadj, Sunwoo Hwang, Sabrina Seiler"
+date: "Nov 11, 2024"
+---
+
+# Abstract
+
+This study investigates the association between academic workload and student mental health, specifically examining stress levels, sleep quality, and work-life balance among STA304H5 students at our university. The aim is to analyze how these factors correlate with various mental health indicators. Data collection will be based on the structured questionnaire method, while data analyses will be based on chi-square tests of independence, multiple linear regression, and analysis of variance to identify which of those relationships and trends are statistically significant.
+
+# Introduction
+
+The academic workload faced by university students has increasingly become one of the critical variables for university students concerning mental health. Given a broader context of increasing academic challenges, many students experience heightened stress levels, which impact various aspects of their well-being, including sleep quality, work-life balance, and several mental health issues.
+
+First, commonly reported mental health issues, including anxiety, depression and stress, have been found to correlate with academic pressures in highly competitive or rigorous programs where students may feel unable to meet academic and personal expectations (Beiter et al., 2015). Second, research indicates that students experiencing high academic workload tend to report poorer sleep quality and shorter sleep duration, which, in turn, can exacerbate mental health problems and academic performance challenges (Hershner & Chervin, 2014; Galambos et al., 2009). Third, students’ living environments and their ability to maintain a balanced lifestyle can also significantly impact mental health, since living in a more supportive and conducive environment positions students to better manage academic responsibilities and personal well-being (Kim & Koh, 2018).
+
+Given the above potential factors, we seek to address the following research questions in this report:
+- **Research Question 1:** Is there an association between students’ academic workload and the amount of mental health issues?
+  - **Null Hypothesis:** There is no association between academic workload and the amount of mental health issues.
+  - **Alternative Hypothesis:** There is a significant association between academic workload and the amount of mental health issues.
+
+- **Research Question 2:** How does the academic workload affect the quality/length of sleep and its subsequent impact on students' mental health?
+  - **Null Hypothesis:** Academic workload does not affect the quality or length of sleep, nor does it affect students' mental health.
+  - **Alternative Hypothesis:** Academic workload significantly affects the quality and/or amount of sleep students get, which affects mental health.
+
+- **Research Question 3:** Is mental health affected by students’ living situations or students’ ability to maintain work-life balance?
+  - **Null Hypothesis:** Students' mental health is not affected by their living situation or their ability to maintain a work-life balance.
+  - **Alternative Hypothesis:** Students' mental health is significantly affected by their living situation and their ability to maintain a work-life balance.
+
+
+This study focuses on students enrolled in STA304H5 during Fall 2024, aiming to provide valuable insights into the effects of academic workload on their overall well-being. By exploring these relationships, the findings may inform strategies to enhance student support services and improve academic experiences.
+
+# Methodology
+
+Between October 8th, 2024, and October 20th, 2024, the questionnaire’s Google Form link was posted on the STA304H5 Piazza course discussion board. We utilized simple random sampling by using the R random generator to randomly sample n students from the received questionnaire responses. On the questionnaire, we asked participants to complete 10 short answer questions inquiring about academic workload, average hours studied weekly, amounts of experienced stress-related symptoms (stress, anxiety, concentration difficulty), hours of sleep per night, current living situation and experienced common issues caused by academic workload (time management, social life, financial).
+
+
+## 1. Target Population
+
+The target population consists of students enrolled in the STA304H5 course during the Fall 2024 semester.
+
+## 2. Sampling Method
+
+We will use **Simple Random Sampling (SRS)** by combining both sections of the STA304H5 course and selecting a random sample of students from the pool. This method assures that each student has an equal chance of being selected.
+
+## 3. Variables of Interests
+
+The following variables of interests were identified for the research:
+
+### Academic Workload
+Academic workload is defined by the number of assignments, projects, exams, and overall demands of the course. This study aims to determine whether higher academic demands are linked to increased mental health problems, such as stress.
+
+### Living Situation
+This includes categories such as living alone, living with family, living with roommates, or living on campus. The living situation can significantly affect students' mental health and their ability to cope with academic stress. Factors like social support, privacy, and distractions play a key role.
+
+### Study Hours
+Study hours reflect students' study habits and time management. This stratum analyzes whether more study hours correlate with reduced stress and anxiety or lead to exhaustion and increased mental health problems.
+
+### Mental Health Symptoms (Stress, Anxiety, and Concentration Difficulties)
+These symptoms are key indicators of students' mental health and may be influenced by academic workload and living conditions. Understanding these relationships helps target interventions and support strategies to improve students' mental well-being.
+
+
+## 4. Sample Size
+
+In our research, we applied Simple Random Sampling (SRS) on 200 students. Now, to find out the sample size using the bound of error as 0.25, we used the following formula for the width of confidence interval:
+
+$$
+D = \frac{B^2}{4}
+$$
+
+Setting $B = 0.29$, we have:
+
+$$
+D = \frac{(0.29)^2}{4} = 0.021025
+$$
+
+Using the standard deviation ($\sigma$) of the academic workload variable, we computed the required sample size using the formula:
+
+$$
+n = \frac{N \times \sigma^2}{(N-1) \times D + \sigma^2}
+$$
+
+To randomize our sampling process, we used R's random sampling function `sample()` with a fixed seed (`set.seed(1)`) to randomly select participants from the full dataset.
+
+
+### 5. Summary of Questions
+
+
+The survey will consist of a series of questions designed to capture key variables, including:
+
+* Academic workload (measured in hours per week)
+* Quality and duration of sleep (self-reported)
+* Stress symptoms (using a standardized scale)
+* Living situation (on-campus, off-campus, with family, etc.)
+* Work-life balance (self-assessment of management skills)
+
+# Analysis
+
+## Section 1. ANOVA
+
+RQ1 questions if academic workload contributes to a student’s stress levels. To answer this question, ANOVA (analysis of variance) is used to test the difference in average stress levels between students with different academic workloads. All our assumptions are satisfied as samples between the groups were randomly sampled and responses are independent from each other, data from each group is normally distributed (large sample size, n > 30) and variances are approximately the same (obtained p-value of 0.07758 from Barlett’s test, which is above the α = 0.05 significance level.)
+
+# ANOVA between stress and academic workload
+
+| Variable            | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(>F)         |
+|---------------------|-------------------------|----------------------|------------------|---------|----------------|
+| academic workload   | 3                       | 3.136                | 1.0455          | 4.273   | 0.0136         |
+| Residuals           | 27                      | 6.605               | 0.2446           |         |                |
+
+Since the calculated F-value of 4.273 is larger than the critical F-value of 2.960 at a 5% significance level with (3, 27) degrees of freedom, we reject the null hypothesis.
+Therefore, there is a statistically significant relationship between student academic workload and levels of stress. This conclusion is also supported by the p-value of 0.0136, which is less than the significance level of 0.05.
+
+# ANOVA between stress and hours\_sleep
+
+| Variable            | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(>F)         |
+|---------------------|-------------------------|----------------------|------------------|---------|----------------|
+| sleep               | 2                       | 1.242               | 0.6210          | 2.046   | 0.148           |
+| Residuals           | 28                      | 8.500              | 0.3036          |         |                |
+
+Since the calculated F-value of 2.046 is smaller than the critical F-value of 3.340 at the 5% significance level with (2, 28) degrees of freedom, we fail to reject the null hypothesis. Therefore, there is no statistically significant correlation between hours of sleep and levels of stress among students.
+
+# ANOVA between stress and missed social events
+
+| Variable               | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(>F)         |
+|------------------------|-------------------------|----------------------|------------------|---------|----------------|
+| missed\_social\_events | 4                       | 1.220               | 0.3049           | 0.93   | 0.462          |
+| Residuals              | 26                      | 8.522              | 0.3278           |         |                |
+
+Since the calculated F-value of 1.092 is smaller than the critical F-value of 2.649 at the 5% significance level with (4, 34) degrees of freedom, we fail to reject the null hypothesis. This conclusion is also supported by the p-value of 0.376, which is greater than the significance level of 0.05. Therefore, there is no statistically significant relationship between stress levels and missed social events among students.
+
+# Section 2. Chi-square Test of Independence
+Research Question 1 questions if there is a relationship between the academic workload of a student and their mental health. Research question 3 questions if there is a relationship between students' living situation or ability to maintain work-life balance. Our assumption that the data is randomly sampled holds given our method of sampling outlined above.
+To prove that there exists a relationship between these variables, we want to use the chi square test of independence. We use $\alpha = 0.05$ as the significance level.
+
+# Chi Square Test between Academic Workload and Stress
+$X^2 = 25.936$, *df* = 6, *p-value* = 0.0002288
+
+Since the calculated *p-value* was 0.0002288 and is less than $\alpha = 0.05$, we reject the null hypothesis. This indicates that there is a significant association between academic workload and the stress levels of a student.
+
+
+# Chi Square Test between Academic Workload and Anxiety
+$X^2 =14.113$,*df*=6, *p-value* =0.0284
+
+Since the calculated *p-value* was 0.0284 and is less than $\alpha = 0.05$, we reject the null hypothesis. There is enough statistical evidence that there is a significant association between the academic workload and the anxiety levels of a student.
+
+# Chi Square Test between Academic Workload and Concentration
+$X^2 =6.5$, *df*=6, *p-value* =0.3696
+
+Since the calculated p-value was 0.3696 and is greater than $\alpha = 0.05$, we fail to reject the null hypothesis. There isnn't enough statistical evidence to indicate that the academic workload and the 
+concentration levels of a student are related.
+
+# Chi Square Test between Living Situation and Stress
+$X^2 =4.9936$, *df*=6, *p-value* =0.5446
+
+Since the calculated *p-value* was 0.5446 and is greater than $\alpha = 0.05$, we fail to reject the null hypothesis. There isn't enough statistical evidence that the living situation and the stress levels of a student are related.
+
+# Chi Square Test between Living Situation and Anxiety
+$X^2=6.6042$, *df*=6, *p-value* =0.359
+
+Since the calculated p-value was 0.359 and is greater than a=0.05, we fail to reject the null hypothesis. There isn't enough statistical evidence that the living situation and the anxiety levels of a student are related.
+
+# Chi Square Test between Living Situation and Concentration
+X-squared =2.8773, df=6, p-value =0.8241
+
+Since the calculated p-value was 0.8241 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the living situation and the 
+concentration levels of a student are related.
+
+# Chi Square Test between Time Management and Stress
+X-squared =10.894, df=8, p-value =0.2078
+
+Since the calculated p-value was 0.2078 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the time management skills and the stress levels of a student are related.
+
+# Chi Square Test between Time Management and Anxiety
+X-squared =6.5567, df=8, p-value =0.5851
+
+Since the calculated p-value was 0.5851 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the time management skills and the anxiety levels of a student are related.
+
+# Chi Square Test between Time Management and Concentration
+X-squared =9.3321, df=8, p-value =0.3151
+
+Since the calculated p-value was 0.3151 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the time management skills and the concentration levels of a student are related.
+
+# Chi Square Test between Financials and Stress
+X-squared =9.3321, df=8, p-value =0.7223
+
+Since the calculated p-value was 0.3151 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the financial situation and the stress levels of a student are related.
+
+# Chi Square Test between Financials and Anxiety
+X-squared =5.3134, df=8, p-value =0.7236
+
+Since the calculated p-value was 0.7236 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the financial situation and the anxiety levels of a student are related.
+
+# Chi Square Test between Financials and Concentration
+X-squared =6.1471, df=8, p-value =0.6308
+
+Since the calculated p-value was 0.6308 and is greater than a=0.05, we fail to reject the null hypothesis.  There isn't enough statistical evidence that the financial situation and the concentration levels of a student are related.
+
+# Section 3. Simple and Multiple Linear Regressions
+This part of the analysis is concerned with the application of linear regression to answer the three research questions as outlined above in the introduction.
+
+## Research Question 1
+
+### a. Relevant graphs & tables
+Research Question 1 is concerned with determining whether there is a relationship between students’ academic workload and the prevalence of mental health issues in students. To answer this question, we start by plotting a boxplot of academic workload by stress level. This plot suggests that higher stress levels are associated with a higher academic workload. On average, students who "Always" or "Sometimes" feel stressed tend to have a higher workload than those who "Never" feel stressed. 
+
+```{r}
+library(ggplot2)
+
+sample_data$stress <- factor(sample_data$stress, levels = c("Never", "Sometimes", "Always"))
+boxplot_plot <- ggplot(sample_data, aes(x = factor(stress), y = academic_workload)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +
+  labs(title = "Boxplot of Academic Workload by Stress Level",
+       x = "Stress Level",
+       y = "Academic Workload") +
+  theme_minimal()
+print(boxplot_plot)
+
+# # Create a boxplot of hours_sleep by stress_binary
+# boxplot_plot <- ggplot(sample_data, aes(x = factor(stress_binary), y = hours_sleep)) +
+#   geom_boxplot(fill = "#56B4E9", color = "black") +  # Customize the colors if desired
+#   labs(title = "Boxplot of Hours of Sleep by Stress Level",
+#        x = "Stress (0 = No Stress, 1 = Stress)",
+#        y = "Hours of Sleep") +
+#   theme_minimal()
+
+# # Display the plot
+# print(boxplot_plot)
+```
+
+### c. Necessary Assumptions
+To confirm this association, we implement a simple linear regression model, where the dependent variable is stress_numeric (the stress variable, converted to numeric values), and the independent variable is academic_workload. To implement this model, we check the following assumptions using the following plot of the residuals:
+
+![Residuals Plot](residuals_rq1.png){width=80%}
+
+ 1. Independence of errors: Since the plot has no noticable pattern, the independence assumption is satisfied.
+ 2. Normality of errors: Since our sample size is sufficiently large, by the Central Limit Theorem the sample mean (and by extension, the sampling distribution of residuals) approximately follows a Normal distribution. 
+ 3. Homogeneity of variances amongst errors: Since the residuals plot has a "horizontal band appearance", this suggests that the error have mean zero and a constant variance.
+
+ Since all the assumptions are met, we run the regression and obtain the output below using the code in Appendix B:
+
+### d. Computation and statistical test output
+Call:
+lm(formula = stress_numeric ~ academic_workload, data = sample_data)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.5301 -0.3668  0.1434  0.4699  0.7965
+
+Coefficients:
+                  Estimate Std. Error t value Pr(>|t|)   
+(Intercept)        1.22389    0.40942   2.989  0.00495 **
+academic_workload  0.32655    0.09945   3.284  0.00224 **
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.5353 on 37 degrees of freedom
+Multiple R-squared:  0.2256,    Adjusted R-squared:  0.2047
+F-statistic: 10.78 on 1 and 37 DF,  p-value: 0.002245
+
+The equation of the regression line is given by: $stress = 1.22389 + 0.32655*workload$
+
+### e. Interpretation
+The small $p-value = 0.00224$ indicates that academic workload is a significant predictor of stress. Therefore, we can conclude that there is a significant relationship between students academic workload and their stress levels.
+
+
+## Research Question 2
+
+### a. Relevant graphs & tables
+Research Question 2 investigates whether there is a relationship between students’ academic workload, the amount of sleep they get, and impact on mental health. Since the ANOVA below showed no significant relationship between stress and hours of sleep, we investigate the effect of another factor, the number of missed social events.To begin, we plot a boxplot of hours of sleep by the number of missed social events. This plot suggests students who miss more social events tend to have fewer hours of sleep on average.
+
+```{r}
+boxplot_plot <- ggplot(sample_data, aes(x = factor(missed_social_events), y = hours_sleep)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +  # Customize the colors if desired
+  labs(title = "Boxplot of Hours of Sleep by Missed Social Events",
+       x = "Missed Social Events",
+       y = "Hours of Sleep") +
+  theme_minimal()
+
+# Display the plot
+print(boxplot_plot)
+```
+
+### c. Necessary Assumptions
+To assess this relationship, we use a multiple linear regression model with hours of sleep as the dependent variable, and academic workload and missed social events as the independent variables. Before interpreting this model, we check the following assumptions:
+
+![Residuals Plot](residuals_rq2.png){width=80%}
+![QQ Plot](qq_rq2.png){width=80%}
+
+1. Independence of errors: The residual plot shown above indicates no clear patterns, which suggests independence.
+2. Normality of errors: Since the sample size is large, the Central Limit Theorem implies that the residuals should approximate a normal distribution. Also, a QQ-plot confirms Normality.
+3. Homogeneity of variances: The residuals plot exhibits a roughly horizontal band, indicating constant variance across predicted values.
+4. No multi-collinearity: We calculated the VIF of each independent variable, and found that $VIF(academic\_workload) = 1.076844$, and $VIF(missed\_social\_events) = 1.076844$. Since they are both less than 5,this indicates there is little correlation between them.
+
+With all assumptions adequately met, we proceed with the regression analysis.
+
+### d. Computation and statistical test output
+```{r}
+lm(formula = hours_sleep ~ academic_workload + missed_social_events, 
+    data = sample_data)
+```
+| Residuals          | Min | 1Q| Median| 3Q | Max |
+|------------------------|-------------------------|----------------------|------------------|---------|----------------|
+| -1.37588| -0.54906|-0.09342| 0.60662| 0.93   |  2.53031
+---
+| Predictor               | Estimate | Std. Error | t value | Pr(>|t|)  |
+|-------------------------|----------|------------|---------|-----------|
+| (Intercept)             | 8.5521   | 0.6661     | 12.838  | 5.3e-15   |
+| academic_workload       | -0.1412  | 0.1666     | -0.848  | 0.40208   |
+| missed_social_events    | -0.3763  | 0.1194     | -3.151  | 0.00327   |
+
+
+---
+| Metric                           | Value              |
+|----------------------------------|--------------------|
+| Residual standard error          | 0.864 on 36 DF     |
+| Multiple R-squared               | 0.2653             |
+| Adjusted R-squared               | 0.2245             |
+| F-statistic                      | 6.5 on 2 and 36 DF |
+| p-value                          | 0.003889           |
+
+
+
+The regression equation is given by:
+
+$hours\_of\_sleep = 8.5521 − 0.1412 * academic\_workload − 0.3763 * missed\_social\_events$
+
+### e. Interpretation
+
+The output of the regression analysis shows that the missed social events has a statistically significant negative association with hours of sleep (p = 0.00327). However, academic workload does not have a significant relationship with hours of sleep (p = 0.40208).
+
+## Research Question 3
+
+### a. Relevant graphs & tables
+Research Question 3 examines whether mental health, represented by stress levels, is affected by students’ living situations and their ability to maintain a work-life balance. To explore this relationship, we first plot a boxplot of stress level by missed social events, with students grouped by stress categories ("Always," "Never," and "Sometimes"). This plot suggests that students who miss social events "Always" or "Sometimes" have higher stress levels, while those who "Never" miss social events report lower stress levels.
+
+```{r}
+boxplot_plot <- ggplot(sample_data, aes(x = factor(stress), y = missed_social_events)) +
+  geom_boxplot(fill = "#56B4E9", color = "black") +
+  labs(title = "Boxplot of Missed Social Events by Stress Level",
+       x = "Missed Social Events",
+       y = "Stress Level") +
+  theme_minimal()
+print(boxplot_plot)
+```
+
+
+### c. Necessary Assumptions
+To investigate the impact of missed social events and living situations on stress, we use a multiple linear regression model. The response variable is stress (in numeric form), and the predictors are missed social events and living situation. We verify the following assumptions:
+
+![Residuals Plot](residuals_rq3.png){width=80%}
+![QQ Plot](qq_rq2.png){width=80%}
+
+1. Independence of errors: The residual plot indicates no clear patterns, suggesting that the errors are  independent.
+2. Normality of errors: Since the sample size is large, the Central Limit Theorem implies that the residuals should approximate a normal distribution. Also, a QQ-plot confirms Normality.
+3. Homogeneity of variances: The residuals plot exhibits a roughly horizontal band, indicating constant variance across predicted values.
+4. No multi-collinearity: Since both VIF values are close to 1, there’s no indication of multicollinearity in this model.
+
+With all assumptions adequately met, we proceed with the regression analysis.
+
+### d. Computation and statistical test output
+Call:
+lm(formula = stress_numeric ~ missed_social_events + living_situation, 
+    data = sample_data)
+
+Residuals:
+
+| Min     | 1Q      | Median  | 3Q      | Max     |
+|---------|---------|---------|---------|---------|
+| -1.2350 | -0.4251 |  0.1426 |  0.4538 |  0.9143 |
+
+
+| Predictor                             | Estimate | Std. Error | t value | Pr(>|t|) |
+|---------------------------------------|----------|------------|---------|----------|
+| (Intercept)                           | 1.93006  | 0.27980    | 6.898   | 6.02e-08 |
+| missed_social_events                  | 0.15560  | 0.07721    | 2.015   | 0.0518 . |
+| living_situationLiving on campus      | 0.81061  | 0.39928    | 2.030   | 0.0502 . |
+| living_situationLiving with family    | 0.21206  | 0.28310    | 0.749   | 0.4590   |
+| living_situationLiving with roommates | 0.30493  | 0.25406    | 1.200   | 0.2383   |
+
+
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+| Metric                          | Value                |
+|----------------------------------|----------------------|
+| Residual standard error         | 0.5745 on 34 DF      |
+| Multiple R-squared              | 0.1806               |
+| Adjusted R-squared              | 0.08416              |
+| F-statistic                     | 1.873 on 4 and 34 DF |
+| p-value                         | 0.1378               |
+
+
+The equation of the regression line is given by:
+
+$stress = 1.93006 + 0.15560 * missed\_social\_events + 0.81061*living\_situation\_living\_on\_campus + 0.21206*living\_with\_family + 0.30493*living\_with\_roommates$
+
+# Discussion and Results
+
+
+ANOVA test between stress and academic workload has the calculated F-value of 4.273, which is larger than the critical F-value of 2.960 at the 5% significance level with (3, 27) degrees of freedom. Therefore, we reject the null hypothesis. There is a statistically significant relationship between student academic workload and levels of stress. This suggests that variations in academic workload are significantly related to variations in stress.
+
+ANOVA test between stress and hours of sleep has the calculated F-value of 0.163, which is smaller than the critical F-value of 3.340 at the 5% significance level with (2, 28) degrees of freedom. Therefore, we fail to reject the null hypothesis. There is no statistically significant correlation between hours of sleep and levels of stress among students. This suggests that variations in hours of sleep do not significantly relate to variations in stress levels.
+
+ANOVA test between stress and missed social events has the calculated F-value of 1.092, which is smaller than the critical F-value of 2.649 at the 5% significance level with (4, 34) degrees of freedom. Therefore, we fail to reject the null hypothesis. This means that stress levels and missed social events do not have a significant relationship.
+
+For the chi square tests of independence bewteen academic workload and stress, anxiety, the respective p values are 0.0002288 and 0.0284 which are both less than the alpha a=0.05, so we reject the null hypothesis. For the chi square tests of indpendence between academic workload and concentration, the p value is 0.3696, which is greater than the alpha a=0.05, therefore we fail to reject the null hypothesis. This suggests that a student's academic workload has an on their stress or anxiety but not their concentration. 
+
+Chi square tests between students' living situation and their stress, anxiety and concentration yield p values of 0.5446, 0.359, and 0.8241 respectively. All of these p values are greater than the alpha a=0.05, therefore we fail to reject the null hypothesis for all three of these chi square tests. This suggests that the living situation of a student doesn't have an association with their stress, anxiety and concentration. 
+
+Chi square tests between students' time management skills and their stress, anxiety and concentration yield p values of 0.2078, 0.5851, and 0.3151 respectively. All of these p values are greater than the alpha a=0.05, therefore we fail to reject the null hypothesis for all three of these chi square tests. This suggests that a student's ability to manage their time doesn't have an association with their stress, anxiety and concentration. 
+
+Chi square tests between students' financials and their stress, anxiety and concentration yield p values of 0.7223, 0.7236, and 0.6308 respectively. All of these p values are greater than the alpha a=0.05, therefore we fai to reject the null hypothesis for all three of these chi square tests. This suggests that a student's financial situation doesn't have an association with their stress, anxiety and concentration. 
+
+The results of the multiple and linear regression tests indicate that missed social events are a marginally significant predictor of stress levels (p = 0.0518). Living situation, specifically living on campus, is also a marginally significant predictor (p = 0.0502). However, living with family (p = 0.4590) and living with roommates (p = 0.2383) do not significantly predict stress. 
+
+Overall, the results of this study show that stress among college students is primarily related to academic factors, with lifestyle factors such as sleep and socializing having less of an impact than expected.
+
+# 6. Limitations
+
+Although this study has provided several valuable insights into the relationship between students' workload, stress, sleep, and work-life balance, there are a few limitations that may have affected the accuracy of the findings. Some of these limitations include possible issues with ensuring sample randomization, survey question design, and sample size. The first limitation is the potential issue with ensuring randomization in the sample selection. Although we aimed to select a random sample of students from the survey responses, the process may have been influenced by biases in how respondents answered the survey. For example, certain groups of students may have been more likely to complete the survey, potentially leading to an unrepresentative sample. Additionally, some of the survey questions could have been clearer or more specific, which might have helped reduce the possibility of misinterpretation. Lastly, expanding the sample size would improve the accuracy and applicability of the findings. In the future, the study could be improved by ensuring a completely randomised design and revisiting our survey questions to capture more accurate responses.
+
+# 7. Conclusion 
+
+
+The linear regression analysis conducted for the three research questions of this study provides valuable insights into the factors affecting student stress and mental health. For Research Question 1, we found a significant positive relationship between academic workload and stress levels, suggesting that students with heavier workloads tend to experience higher levels of stress. In Research Question 2, while academic workload did not significantly impact the amount of sleep, missed social events were found to significantly reduce hours of sleep, which may contribute to poor mental health. For Research Question 3, missed social events and living situation were marginally significant predictors of stress, indicating that students who miss social events or live on campus tend to report higher stress levels. These findings highlight the importance of considering multiple factors in understanding a student's overall well-being. However, the limitations of this analysis, including potential issues with sample randomization and measurement quality, should be addressed in future research to enhance the robustness and accuracy of the results. Future studies should also explore other possible variables, such as social support and coping mechanisms, which may further explain the mental health challenges faced by students.
+
+# 8. Documentation of AI tool usage
+The report was completed without the use of generative AI tools such as ChatGPT. All content in this report, including writing, analysis, and interpretation, was created entirely by team members through a collaborative effort and peer review process. We affirm that these are our original thoughts and analyses.
+
+# 9. Appendix
+
+## References
+
+1. Beiter, R., Nash, R., McCrady, M., Rhoades, D., Linscomb, M., Clarahan, M., & Sammut, S. (2015). The prevalence and correlates of depression, anxiety, and stress in a sample of college students. *Journal of Affective Disorders*, 173(3), 90-96.
+2. Galambos, N. L., Howard, A. L., & Krahn, H. J. (2009). Work, stress, and academic performance in university students. *Journal of Youth and Adolescence*, 38(4), 490-503.
+3. Hershner, S. D., & Chervin, R. D. (2014). Causes and consequences of sleepiness among college students. *Nature and Science of Sleep*, 6, 73-84.
+4. Kim, E., & Koh, K. (2018). Work-life balance and well-being among college students: A critical literature review. *Journal of College Counseling*, 21(3), 247-261.

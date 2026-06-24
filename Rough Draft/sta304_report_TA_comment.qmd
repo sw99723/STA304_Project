@@ -1,0 +1,189 @@
+---
+title: "STA304 Report"
+author: "Chau Nguyen, John Luc, Adam Tadj, Sunwoo Hwang, Sabrina Seiler"
+date: "Nov 11, 2024"
+editor: 
+  markdown: 
+    wrap: sentence
+---
+
+# Abstract
+
+This study investigates the association between academic workload and student mental health, specifically examining stress levels, sleep quality, and work-life balance among STA304H5 students at our university.
+The aim is to analyze how these factors correlate with various mental health indicators.
+*Data collection will be based on the structured questionnaire method* (Anna: confused about what this means?)*,* while data analyses will be based on chi-square tests of independence, multiple linear regression, and analysis of variance to identify which of those relationships and trends are statistically significant.
+(Anna: you should also briefly mention the actual results.)
+
+# Introduction
+
+The academic workload faced by university students has increasingly become one of the critical variables for university students concerning mental health.
+Given a broader context of increasing *academic demons* (Anna: you can keep this term, but it's quite strong and I don't know what this refers to.), many students experience heightened stress levels, which impact various aspects of their well-being, including sleep quality, work-life balance, and several mental health issues.
+
+First, commonly reported mental health issues, including anxiety, depression and stress, have been found to correlate with academic pressures in highly competitive or rigorous programs where students may feel unable to meet academic and personal expectations (Beiter et al., 2015).
+(Anna: would like to know what these references correspond to.) Second, research indicates that students experiencing high academic workload tend to report poorer sleep quality and shorter sleep duration, which, in turn, can exacerbate mental health problems and academic performance challenges (Hershner & Chervin, 2014; Galambos et al., 2009).
+Third, students’ living environments and their ability to maintain a balanced lifestyle can also significantly impact mental health, since living in a more supportive and conducive environment positions students to better manage academic responsibilities and personal well-being (Kim & Koh, 2018).
+
+Given the above potential factors, we seek to address the following research questions in this report: Is there an association between students’ academic workload and amount of mental health issues?
+(Anna: you need to format this a bit better; hard to read a paragraph that mentions a bunch of null and alt. hypotheses without separating the questions.)
+
+Null Hypothesis: There is no association between academic workload and the amount of mental health issues
+
+Alternative Hypothesis: There’s a significant association between academic workload and the amount of mental health issues.
+
+How does the academic workload affect the quality/length of sleep and its subsequent impact on students' mental health?
+
+Null Hypothesis: Academic workload does not affect the quality or length of sleep, nor does it affect students' mental health.
+
+Alternative Hypothesis: Academic workload significantly affects the quality and/or amount of sleep students get, which affects mental health.
+
+Is mental health affected by students’ living situations or students’ ability to maintain work-life balance?
+
+Null Hypothesis: Students' mental health is not affected by their living situation or their ability to maintain a work-life balance.
+
+Alternative Hypothesis: Students' mental health is significantly affected by their living situation and their ability to maintain a work-life balance.
+
+This study focuses on students enrolled in STA304H5 during Fall 2024, aiming to provide valuable insights into the effects of academic workload on their overall well-being.
+By exploring these relationships, the findings may inform strategies to enhance student support services and improve academic experiences.
+
+# Methodology
+
+Between October 8th, 2024, and October 20th, 2024, the questionnaire’s Google Form link was posted on the STA304H5 Piazza course discussion board.
+We utilized simple random sampling by using the R random generator to randomly sample n (Anna: what is n?) students from the received questionnaire responses (Anna: how many questionnaire responses?).
+(Anna: NEED to be super specific about this. Questions: how many samples did you actually capture? why did you use SRS? how much did you choose to resample and why?)
+
+On the questionnaire, we asked participants to complete 10 short answer questions inquiring about academic workload, average hours studied weekly, amounts of experienced stress-related symptoms (stress, anxiety, concentration difficulty), hours of sleep per night, current living situation and experienced common issues caused by academic workload (time management, social life, financial).
+
+## 1. Target Population
+
+The target population consists of students enrolled in the STA304H5 course during the Fall 2024 semester.
+
+## 2. Sampling Method
+
+We will use **Simple Random Sampling (SRS)** by combining both sections of the STA304H5 course and selecting a random sample of students from the pool.
+This method assures that each student has an equal chance of being selected.
+(Anna: may want to mention why SRS is okay here)
+
+If you use SRS -\> you dont have strata, so I'm confused about the next section.
+
+stata -\> only for stratified.
+
+## 3. Strata (Anna: I think you meant to change the title)
+
+The following strata were identified for the research:
+
+### Academic Workload
+
+Academic workload is defined by the number of assignments, projects, exams, and overall demands of the course.
+This study aims to determine whether higher academic demands are linked to increased mental health problems, such as stress.
+
+### Living Situation
+
+This includes categories such as living alone, living with family, living with roommates, or living on campus.
+The living situation can significantly affect students' mental health and their ability to cope with academic stress.
+Factors like social support, privacy, and distractions play a key role.
+
+### Study Hours
+
+Study hours reflect students' study habits and time management.
+This stratum analyzes whether more study hours correlate with reduced stress and anxiety or lead to exhaustion and increased mental health problems.
+
+### Mental Health Symptoms (Stress, Anxiety, and Concentration Difficulties)
+
+These symptoms are key indicators of students' mental health and may be influenced by academic workload and living conditions.
+Understanding these relationships helps target interventions and support strategies to improve students' mental well-being.
+
+## 4. Sample Size
+
+In our research, we applied Simple Random Sampling (SRS) on 200 students.
+Now, to find out the sample size using the bound of error as 0.25, we used the following formula for the width of confidence interval:
+
+$$
+D = \frac{B^2}{4}
+$$
+
+Where $B = 0.25$, giving:
+
+$$
+D = \frac{(0.25)^2}{4} = 0.015625
+$$
+
+Using the standard deviation ($\sigma$) of the academic workload variable, we computed the required sample size using the formula:
+
+$$
+n = \frac{N \times \sigma^2}{(N-1) \times D + \sigma^2}
+$$
+
+To randomize our sampling process, we used R's random sampling function `sample()` with a fixed seed (`set.seed(1)`) to randomly select participants from the full dataset.
+
+(Anna: todo: you need to say what n is. what is sigma\^2? can just use range/4.)
+
+### 5. Summary of Questions
+
+The survey will consist of a series of questions designed to capture key variables, including:
+
+-   Academic workload (measured in hours per week)
+-   Quality and duration of sleep (self-reported)
+-   Stress symptoms (using a standardized scale)
+-   Living situation (on-campus, off-campus, with family, etc.)
+-   Work-life balance (self-assessment of management skills)
+
+# Analysis
+
+## ANOVA
+
+RQ1 questions if academic workload contributes to a student’s stress levels.
+To answer this question, ANOVA (analysis of variance) is used to test the difference in average stress levels between students with different academic workloads.
+All our assumptions are satisfied as samples between the groups were randomly sampled and responses are independent from each other, data from each group is normally distributed (large sample size, n \> 30) and variances are approximately the same (obtained p-value of 0.07758 from Barlett’s test, which is above the α = 0.05 significance level.)
+
+# ANOVA between stress and academic workload
+
+| Variable          | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(\>F)       |
+|------------|------------|------------|------------|------------|------------|
+| academic workload | 3                       | 4.145               | 1.3818           | 5.121   | 0.00483\*\*\* |
+| Residuals         | 35                      | 9.444               | 0.2698           |         |               |
+
+Since the calculated F-value of 5.121 is larger than the critical F-value of 2.874 at a 5% significance level with (3, 35) degrees of freedom, we reject the null hypothesis.
+*Therefore, the **student academic workload** and **levels of stress** correlate at a statistically significant level. \<- this is the incorrect interpetation! you want to keep correlate for "correlations" (which is a stat. term)*
+
+(Anna: you should add a boxplot, you need to say how the academic workload varies, etc.)
+
+**Therefore**, variation in academic workload is significantly related to variation in stress.
+
+# ANOVA between stress and hours_sleep
+
+| Variable  | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(\>F) |
+|------------|------------|------------|------------|------------|------------|
+| sleep     | 2                       | 0.103               | 0.05128          | 0.163   | 0.85    |
+| Residuals | 36                      | 11.333              | 0.31481          |         |         |
+
+Since the calculated F-value of 0.163 is smaller than the critical F-value of 3.259 at the 5% significance level with (2, 36) degrees of freedom, we fail to reject the null hypothesis.
+Therefore, there is no statistically significant correlation between **hours of sleep** and **levels of stress** among students.
+This suggests that variations in hours of sleep do not significantly relate to variations in stress levels.
+
+# ANOVA between stress and missed social events
+
+| Variable             | Degrees of Freedom (DF) | Sum of Squares (SS) | Mean Square (MS) | F-value | Pr(\>F) |
+|------------|------------|------------|------------|------------|------------|
+| missed_social_events | 4                       | 1.302               | 0.3254           | 1.092   | 0.376   |
+| Residuals            | 34                      | 10.134              | 0.2981           |         |         |
+
+Since the calculated F-value was 1.092 and this is less than the critical value, 2.629 (df=4, df=34).
+Therefore, we fail to reject the null hypothesis.
+This means that **stress levels** and **missed social events** do not have a significant relationship.
+
+# Discussion and Results
+
+ANOVA test between stress and academic workload has the calculated F-value of 5.121 is larger than the critical F-value of 2.874 at 5% significance level with (3, 35) degrees of freedom, we reject the null hypothesis.
+Therefore, the student academic workload and levels of stress correlate at a statistically significant level.
+Therefore, variation in academic workload is significantly related to variation in stress.
+
+ANOVA test between stress and hours_sleep has the calculated F -value of 0.163 is smaller than the critical F -value of 3.259 at the 5% significance level with (2, 36) degrees of freedom; we fail to reject the null hypothesis.
+Therefore, there is no statistically significant correlation between hours of sleep and levels of stress among students.
+This suggests that variations in hours of sleep do not significantly relate to variations in stress levels.
+
+ANOVA test between stress and missed social events has the calculated F-value was 1.092 and this is less than the critical value, 2.629 (df=4, df=34).
+Therefore, we fail to reject the null hypothesis.
+This means that stress levels and missed social events do not have a significant relationship.
+
+Overall, the results of the ANOVA tests show that the stress levels of the students sampled are primarily related to academic factors, with lifestyle factors such as sleep and socializing having less of an impact on their mental health than expected.
+In addition, this voluntary response method was likely to result in selection bias.
